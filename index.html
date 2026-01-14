@@ -21,13 +21,13 @@ body {
   overflow: hidden;
 }
 
-/* HEARTS */
+/* Floating hearts */
 .heart {
   position: fixed;
   bottom: -10px;
-  color: rgba(255, 0, 85, 0.6);
   font-size: 18px;
   animation: floatUp linear infinite;
+  opacity: 0.7;
 }
 
 @keyframes floatUp {
@@ -37,22 +37,24 @@ body {
   }
 }
 
-/* CONTAINER */
+/* Container */
 .container {
   text-align: center;
 }
 
-/* ENVELOPE */
+/* Envelope */
 .envelope {
   width: 280px;
   height: 180px;
-  background: #fff;
+  background: #fff6ea; /* ivory */
   position: relative;
   border-radius: 10px;
   cursor: pointer;
+  border: 2px solid #d1496f;
   box-shadow: 0 15px 35px rgba(0,0,0,0.3);
 }
 
+/* Envelope flap */
 .envelope::before {
   content: "";
   position: absolute;
@@ -60,7 +62,7 @@ body {
   left: 0;
   border-left: 140px solid transparent;
   border-right: 140px solid transparent;
-  border-top: 90px solid #f3b6c1;
+  border-top: 90px solid #d1496f; /* rose */
   transform-origin: top;
   transition: 1s;
 }
@@ -69,7 +71,7 @@ body {
   transform: rotateX(180deg);
 }
 
-/* LETTER */
+/* Letter */
 .letter {
   position: absolute;
   top: 10px;
@@ -78,10 +80,11 @@ body {
   bottom: 10px;
   background: white;
   border-radius: 8px;
-  padding: 20px;
+  padding: 15px;
   opacity: 0;
   transform: translateY(20px);
   transition: 1s;
+  overflow-y: auto;
 }
 
 .envelope.open .letter {
@@ -89,7 +92,7 @@ body {
   transform: translateY(-120px);
 }
 
-/* TEXT */
+/* Text */
 h1 {
   margin-bottom: 20px;
   color: #5b1f2b;
@@ -97,25 +100,58 @@ h1 {
 
 p {
   color: #4a2c2a;
-  line-height: 1.5;
+  line-height: 1.4;
+  font-size: 0.95rem;
 }
 
 .sign {
-  margin-top: 15px;
+  margin-top: 10px;
   font-weight: bold;
 }
 
-/* TAP TEXT */
+/* Buttons */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 12px;
+}
+
+button {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button.yes {
+  background: #d1496f;
+  color: white;
+}
+
+button.no {
+  background: #ccc;
+  color: #333;
+}
+
+button:hover {
+  transform: scale(1.08);
+}
+
+/* Tap text */
 .tap {
-  margin-top: 20px;
+  margin-top: 18px;
   color: #8b1e3f;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 </style>
 </head>
 
 <body>
 
+<!-- Background music -->
 <audio autoplay loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5d6e23fa48.mp3" type="audio/mpeg">
 </audio>
@@ -126,6 +162,7 @@ p {
   <div class="envelope" onclick="openLetter()">
     <div class="letter">
       <p><strong>Dear Muskan,</strong></p>
+
       <p>
         I have never celebrated Valentine’s Day before.
         This is my first time asking someone to be my Valentine.
@@ -133,7 +170,14 @@ p {
         So Muskan, will you be my Valentine,
         for the rest of my life?
       </p>
+
+      <div class="buttons">
+        <button class="yes" onclick="sendAnswer('YES ❤️')">Yes ❤️</button>
+        <button class="no" onclick="sendAnswer('No 😶')">No</button>
+      </div>
+
       <p class="sign">Your,<br>Hero</p>
+      <p id="response"></p>
     </div>
   </div>
 
@@ -145,7 +189,7 @@ function openLetter() {
   document.querySelector(".envelope").classList.toggle("open");
 }
 
-// HEART GENERATOR
+/* Floating hearts generator */
 setInterval(() => {
   const heart = document.createElement("div");
   heart.className = "heart";
@@ -156,6 +200,21 @@ setInterval(() => {
 
   setTimeout(() => heart.remove(), 6000);
 }, 300);
+
+/* Send answer via email */
+function sendAnswer(answer) {
+  document.getElementById("response").innerText =
+    answer === "YES ❤️"
+      ? "You just made someone very happy 💖"
+      : "Thank you for being honest 🤍";
+
+  const email = "YOUR_EMAIL@gmail.com"; // 🔴 CHANGE THIS
+  const subject = "Valentine Answer 💌";
+  const body = `Muskan answered: ${answer}`;
+
+  window.location.href =
+    `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 </script>
 
 </body>
