@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Muskan 🐨</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  bottom: -10px;
+  color: rgba(255, 0, 85, 0.6);
+  font-size: 18px;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+/* CONTAINER */
+.container {
+  text-align: center;
+}
+
+/* ENVELOPE */
+.envelope {
+  width: 280px;
+  height: 180px;
+  background: #fff;
+  position: relative;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-top: 90px solid #f3b6c1;
+  transform-origin: top;
+  transition: 1s;
+}
+
+.envelope.open::before {
+  transform: rotateX(180deg);
+}
+
+/* LETTER */
+.letter {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 1s;
+}
+
+.envelope.open .letter {
+  opacity: 1;
+  transform: translateY(-120px);
+}
+
+/* TEXT */
+h1 {
+  margin-bottom: 20px;
+  color: #5b1f2b;
+}
+
+p {
+  color: #4a2c2a;
+  line-height: 1.5;
+}
+
+.sign {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* TAP TEXT */
+.tap {
+  margin-top: 20px;
+  color: #8b1e3f;
+  font-size: 1.1rem;
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5d6e23fa48.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <h1>For Muskan 🐨</h1>
+
+  <div class="envelope" onclick="openLetter()">
+    <div class="letter">
+      <p><strong>Dear Muskan,</strong></p>
+      <p>
+        I have never celebrated Valentine’s Day before.
+        This is my first time asking someone to be my Valentine.
+        <br><br>
+        So Muskan, will you be my Valentine,
+        for the rest of my life?
+      </p>
+      <p class="sign">Your,<br>Hero</p>
+    </div>
+  </div>
+
+  <div class="tap">Tap the letter ❤️</div>
+</div>
+
+<script>
+function openLetter() {
+  document.querySelector(".envelope").classList.toggle("open");
+}
+
+// HEART GENERATOR
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 6000);
+}, 300);
+</script>
+
+</body>
+</html>
